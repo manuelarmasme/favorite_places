@@ -1,8 +1,9 @@
+import 'package:favorite_places/widget/image_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:favorite_places/providers/users_places.dart';
 
-//ConsumerStatefulWidget is for statefull widget but with provides
+//ConsumerStatefulWidget is for stateful widget but with provides
 //important use consumer state on the other piece of code
 class AddPlaceScreen extends ConsumerStatefulWidget {
   const AddPlaceScreen({super.key});
@@ -54,6 +55,9 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
                 color: Theme.of(context).colorScheme.onBackground,
               ),
             ),
+            //Image input
+            const SizedBox(height: 16),
+            ImageInput(),
             const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: _savePlace,
