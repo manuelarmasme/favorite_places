@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:favorite_places/widget/image_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,15 +20,17 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
   //remember a controller always need their dispose
   final _titleController = TextEditingController();
 
+  File? _selectedImage;
+
   void _savePlace(){
     final enteredText = _titleController.text;
 
-    if (enteredText.isEmpty) {
+    if (enteredText.isEmpty || _selectedImage == null) {
       return;
     }
 
     //getting access to the function into the provider using read
-    ref.read(userPlacesProvider.notifier).addPlace(enteredText);
+    ref.read(userPlacesProvider.notifier).addPlace(enteredText, _selectedImage!);
 
     //going back to the other screen
     Navigator.of(context).pop();
@@ -57,7 +61,9 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
             ),
             //Image input
             const SizedBox(height: 16),
-            ImageInput(),
+            ImageInput(onPickImage: (image) {
+              _selectedImage = image;
+            },),
             const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: _savePlace,
